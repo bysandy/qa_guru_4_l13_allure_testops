@@ -42,6 +42,6 @@ target/
 /gradlew.bat
 
 #Telegram bot exception
-!allure-piechart-telegram-2.0.5.jar
+!allure-notifications-2.1.0.jar
 !src/test/resources/config/chrome.properties
 !src/test/resources/config/selenoid.properties
