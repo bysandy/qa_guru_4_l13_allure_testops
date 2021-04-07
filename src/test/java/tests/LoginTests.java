@@ -3,6 +3,7 @@ package tests;
 import com.codeborne.selenide.ClickOptions;
 import com.codeborne.selenide.Condition;
 import config.ConfigHelper;
+import io.qameta.allure.AllureId;
 import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -40,6 +41,37 @@ public class LoginTests extends TestBase {
         });
 
         step("Verified that user sees correct page", () ->{
+            $(by("data-qa-entity", "choose.close"))
+                    .click();
+
+            $(by("data-qa-payload", "{\"title_name\":\"Моя библиотека\"}"))
+                    .shouldBe(visible);
+        });
+
+    }
+
+    @Test
+    @AllureId("2216")
+    @DisplayName("Unsuccessful Login with Email authorisation (manual)")
+    void unsuccessfulLoginWithEmail(){
+        step("Open home page", () -> open(""));
+
+        step("Fill in email", () ->{
+            $(by("data-qa-entity", "header.login"))
+                    .click();
+            $(by("data-qa-entity", "login.email.section"))
+                    .setValue(ConfigHelper.getEmailUsername());
+            $(by("data-qa-entity", "auth.next.step"))
+                    .click();
+        });
+
+        step("Fill in password", () ->{
+            $(by("data-qa-entity", "login.password.section"))
+                    .setValue(ConfigHelper.getEmailPassword());
+            $(by("data-qa-entity", "auth.send.button")).shouldBe(enabled);
+        });
+
+        step("Verified unsuccesfull Login", () ->{
             $(by("data-qa-entity", "choose.close"))
                     .click();
 
